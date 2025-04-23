@@ -1,26 +1,29 @@
 package main
 
 import (
-	User "Database_Go/user"
+	"Database_Go/data"
 	"fmt"
 )
 
 func main() {
-    // db := User.NewHashDB()
+	db := data.NewJSONDatabase()
 
-    // db.AddUser("john", User.User{Username: "john", Email: "john@example.com"})
-    // db.AddUser("alice", User.User{Username: "alice", Email: "alice@example.com"})
+	// Add JSON-like user data
+	db.AddJSONRecord("user1", map[string]interface{}{
+		"name":   "SampurnaKart",
+		"active": true,
+		"city":   "Jalandhar",
+	})
 
-    // db.SaveToFile("db.json")
+	// Save to file
+	db.SaveToJSONFile("db.json")
 
-    // // Create new instance and load data
-    newDB := User.NewHashDB()
-    newDB.LoadFromFile("db.json")
-	for key, user := range newDB.Data {
-        fmt.Printf("Key: %s, Username: %s, Email: %s\n", key, user.Username, user.Email)
-    }
-    // if user, found := newDB.GetUser("alice"); found {
-    //     fmt.Println("Found user:", user)
-    // }
-	
+	// Load from file
+	newDB := data.NewJSONDatabase()
+	newDB.LoadFromJSONFile("db.json")
+
+	// Fetch and print
+	if user, ok := newDB.GetJSONRecord("user1"); ok {
+		fmt.Println("User1:", user)
+	}
 }
