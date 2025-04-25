@@ -54,3 +54,8 @@ func (c *Collection) DeleteAll() bool{
 	c.Data = []JSONData{}
 	return true
 }
+// Len returns the number of JSONData entries in the collection.
+func (c *Collection) Len() int {
+	return len(c.Data)
+}
+
